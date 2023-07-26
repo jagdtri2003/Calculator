@@ -177,7 +177,9 @@
             }
             decimalAdded = true;
           }
-    
+          if (isOperator(currentInput)) {
+              decimalAdded = false;
+          }
           if (currentInput === '=') {
             if (!lastInputIsOperator) {
               string = eval(string);
@@ -187,8 +189,12 @@
             string = "";
             input.value = string;
             lastInputIsOperator = false;
+            decimalAdded = false;
             lastOperator = null;
           } else if (currentInput === 'DEL') {
+            if(string[string.length - 1] ==='.'){
+                decimalAdded = false;
+            }
             string = string.substring(0, string.length - 1);
             input.value = string;
             lastInputIsOperator = isOperator(string[string.length - 1]);
@@ -199,6 +205,7 @@
               lastOperator = currentInput;
               if (string.length - 1 >= 0) {
                 string = string.substring(0,string.length-1) + currentInput;
+                decimalAdded = false;
               }
             }
             else if(string === "" && isOperator(currentInput)){
