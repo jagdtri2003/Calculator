@@ -164,10 +164,19 @@
       let arr = Array.from(buttons);
       let lastInputIsOperator = false;
       let lastOperator = null;
+      let decimalAdded = false;
     
       arr.forEach((button) => {
         button.addEventListener('click', (e) => {
           const currentInput = e.target.innerHTML;
+
+          if (currentInput === '.') {
+            // If a decimal point is already added, don't allow another one
+            if (decimalAdded) {
+              return;
+            }
+            decimalAdded = true;
+          }
     
           if (currentInput === '=') {
             if (!lastInputIsOperator) {
@@ -185,9 +194,6 @@
             lastInputIsOperator = isOperator(string[string.length - 1]);
             lastOperator = null;
           } else {
-            if(currentInput=='.' && string.contains('.')){
-              return;
-            }
             if (lastInputIsOperator && isOperator(currentInput)){
               // Do not add consecutive operators or start with an operator
               lastOperator = currentInput;
