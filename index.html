@@ -185,6 +185,9 @@
             lastInputIsOperator = isOperator(string[string.length - 1]);
             lastOperator = null;
           } else {
+            if(currentInput=='.' && string.contains('.')){
+              return;
+            }
             if (lastInputIsOperator && isOperator(currentInput)){
               // Do not add consecutive operators or start with an operator
               lastOperator = currentInput;
